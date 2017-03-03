@@ -44,9 +44,9 @@ defmodule Mix.Tasks.Phx.Gen.HtmlTest do
 
       assert_file "lib/phoenix/blog/post.ex"
       assert_file "lib/phoenix/blog/blog.ex"
-      assert_file "test/blog_test.exs"
+      assert_file "test/phoenix/blog/blog_test.exs"
 
-      assert_file "test/web/controllers/post_controller_test.exs", fn file ->
+      assert_file "test/phoenix/web/controllers/post_controller_test.exs", fn file ->
         assert file =~ "defmodule Phoenix.Web.PostControllerTest"
       end
 
@@ -99,7 +99,7 @@ defmodule Mix.Tasks.Phx.Gen.HtmlTest do
       Gen.Html.run(~w(Blog Comment comments title:string))
       assert_file "lib/phoenix/blog/comment.ex"
 
-      assert_file "test/web/controllers/comment_controller_test.exs", fn file ->
+      assert_file "test/phoenix/web/controllers/comment_controller_test.exs", fn file ->
         assert file =~ "defmodule Phoenix.Web.CommentControllerTest"
       end
 

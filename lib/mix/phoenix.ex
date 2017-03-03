@@ -192,10 +192,11 @@ defmodule Mix.Phoenix do
   Returns the test prefix to be used in generated file specs.
   """
   def test_prefix do
+    app = to_string(otp_app())
     if in_umbrella?(File.cwd!()) do
-      "test"
+      Path.join("test", app)
     else
-      "test/web"
+      Path.join(["test", app, "web"])
     end
   end
 

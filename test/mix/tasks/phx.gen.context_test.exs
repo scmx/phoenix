@@ -102,7 +102,7 @@ defmodule Mix.Tasks.Phx.Gen.ContextTest do
         assert file =~ "def change_post"
       end
 
-      assert_file "test/blog_test.exs", fn file ->
+      assert_file "test/phoenix/blog/blog_test.exs", fn file ->
         assert file =~ "use Phoenix.DataCase"
       end
 

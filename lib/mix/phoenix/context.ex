@@ -12,6 +12,8 @@ defmodule Mix.Phoenix.Context do
             basename: nil,
             file: nil,
             dir: nil,
+            test_file: nil,
+            test_dir: nil,
             opts: [],
             pre_existing?: false
 
@@ -20,13 +22,15 @@ defmodule Mix.Phoenix.Context do
   end
 
   def new(context_name, %Schema{} = schema, opts) do
-    otp_app  = to_string(Mix.Phoenix.otp_app())
-    base     = Module.concat([Mix.Phoenix.base()])
-    module   = Module.concat(base, context_name)
-    alias    = module |> Module.split() |> tl() |> Module.concat()
-    basename = Phoenix.Naming.underscore(context_name)
-    dir      = Path.join(["lib", otp_app, basename])
-    file     = Path.join([dir, basename <> ".ex"])
+    otp_app    = to_string(Mix.Phoenix.otp_app())
+    base       = Module.concat([Mix.Phoenix.base()])
+    module     = Module.concat(base, context_name)
+    alias      = module |> Module.split() |> tl() |> Module.concat()
+    basename   = Phoenix.Naming.underscore(context_name)
+    dir        = Path.join(["lib", otp_app, basename])
+    file       = Path.join([dir, basename <> ".ex"])
+    test_dir   = Path.join(["test", otp_app, basename])
+    test_file  = Path.join([test_dir, basename <> "_test.exs"])
 
     %Context{
       name: context_name,
@@ -38,6 +42,8 @@ defmodule Mix.Phoenix.Context do
       basename: basename,
       file: file,
       dir: dir,
+      test_file: test_file,
+      test_dir: test_dir,
       opts: opts,
       pre_existing?: File.exists?(file)}
   end

@@ -94,15 +94,13 @@ defmodule Mix.Tasks.Phx.Gen.Context do
   def copy_new_files(%Context{schema: schema} = context, paths, binding) do
     Gen.Schema.copy_new_files(schema, paths, binding)
     inject_schema_access(context, paths, binding)
-    Mix.Phoenix.copy_from paths, "priv/templates/phx.gen.context", "", binding, [
-      {:new_eex, "context_test.exs", "test/#{context.basename}_test.exs"},
-    ]
     context
   end
 
-  defp inject_schema_access(%Context{file: file} = context, paths, binding) do
+  defp inject_schema_access(%Context{file: file, test_file: test_file} = context, paths, binding) do
     unless context.pre_existing? do
       Mix.Generator.create_file(file, Mix.Phoenix.eval_from(paths, "priv/templates/phx.gen.context/context.ex", binding))
+      Mix.Generator.create_file(test_file, Mix.Phoenix.eval_from(paths, "priv/templates/phx.gen.context/context_test.exs", binding))
     end
 
     schema_content = Mix.Phoenix.eval_from(paths, "priv/templates/phx.gen.context/schema_access.ex", binding)
